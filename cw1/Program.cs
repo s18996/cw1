@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Net.Http;
-using System.Text.RegularExpressions;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace cw1
@@ -9,44 +9,50 @@ namespace cw1
     {
         public static async Task Main(string[] args)
         {
-            //    Console.WriteLine("Hello World!");
-            //    int tmp1 = 1;
-            //    double tmp2 = 2.0;
-
-            //    string tmp3 = "aaaa";
-            //    bool tmp4 = true;
-
-            //    var tmp5 = 1;
-            //    var tmp6 = "string";
-
-            //    string s1 = "ala ma kota";
-            //    string s2 = "i psa";
-
-            //    var path = @"C:\Users\s18996\Desktop\cw1";
-
-            //    Console.WriteLine($"{s1} {s2} {tmp1+tmp5} {tmp4}");
-
-            //    var newPerson = new Person { FirstName = "Daniel" };
-
-            var url = args.Length > 0 ? args[0] : "https://www.pja.edu.pl/";
-            var httpClient = new HttpClient();
-
-            // await gdy asynchroniczne
-            var response = await httpClient.GetAsync(url);
-
-            // 2xx
-            if (response.IsSuccessStatusCode)
+            StringBuilder log = new StringBuilder();
+            try
             {
-                var htmlContent = await response.Content.ReadAsStringAsync();
+                var pathCSV = args.Length > 0 ? args[0] : "data.csv";
+                var destination = args.Length > 1 ? args[1] : "result.xml";
+                var format = args.Length > 2 ? args[2] : "xml";
 
-                var regex = new Regex("[a-z]+[a-z0-9]*@[a-z0-9]+\\.[a-z]+", RegexOptions.IgnoreCase);
+                var lines = File.ReadLines(pathCSV);
 
-                var matches = regex.Matches(htmlContent);
-
-                foreach (var match in matches)
+                foreach (var line in lines)
                 {
-                    Console.WriteLine(match.ToString());
+                    Console.WriteLine($"{line}");
                 }
+
+                var parsedDate = DateTime.Parse("09.03.2020");
+                Console.WriteLine(parsedDate);
+                var now = DateTime.UtcNow;
+                Console.WriteLine(now);
+                var today = DateTime.Today;
+                Console.WriteLine(today.ToShortDateString());
+
+                var hash = new HashSet
+                hash.Add(stud1);
+                hash.Add(stud2);
+                hash.Add(stud3);
+
+                var newStud = new Student();
+
+                if (hash.Add(newStud))
+                {
+                    errors.Add(newStud);
+                }
+
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e);
+                log.Append("Podana sciezka jest niepoprawna");
+                throw;
+            }
+            catch (FileNotFoundException e)
+            {
+                Console.WriteLine(e);
+                log.Append($"Plik {args[0]} nie istnieje");
             }
         }
     }
