@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace cw1
 {
-    class MyComparer : IEqualityComparer<Student>
+    public class MyComparer : IEqualityComparer<Student>
     {
 
         public bool Equals(Student x, Student y)
